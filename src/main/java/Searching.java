@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Searching {
@@ -13,7 +14,7 @@ public class Searching {
         for (int i = 0; i < numberOfBooks; i++) {
             books.add(new Book(i, "name for the book " + i));
         }
-
+        System.out.println(books);
         System.out.println("Id of the book to search for?");
         int idToSearchFor = Integer.valueOf(scanner.nextLine());
 
@@ -44,11 +45,30 @@ public class Searching {
     }
 
     public static int linearSearch(ArrayList<Book> books, int searchedId) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == searchedId) {
+                return i;
+            }
+        }
         return -1;
     }
 
     public static int binarySearch(ArrayList<Book> books, long searchedId) {
+        int begin = 0;
+        int end = books.size() - 1;
+        int middle;
+        while (begin <= end) {
+            middle = (end + begin) / 2;
+            if (books.get(middle).getId() == searchedId) {
+                return middle;
+            }
+            if (books.get(middle).getId() >= searchedId) {
+                end = middle - 1;
+            }
+            if (books.get(middle).getId() <= searchedId) {
+                begin = middle + 1;
+            }
+        }
         return -1;
     }
 }
-
